@@ -10,5 +10,5 @@ module.exports = (app) => {
   app.get('/admin/restaurants', adminController.getRestaurants)
 
   app.get('/signup', userController.signUpPage)
-  app.post('signup', userController.signUp)
+  app.post('/signup', userController.signUp)
 }
