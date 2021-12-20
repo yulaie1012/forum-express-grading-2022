@@ -11,6 +11,16 @@ module.exports = {
     }
   },
 
+  getRestaurant: async (req, res) => {
+    try {
+      const restaurantId = Number(req.params.restaurantId)
+      const restaurant = await Restaurant.findByPk(restaurantId, { raw: true })
+      return res.render('admin/restaurant', { restaurant })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
   createPage: (req, res) => {
     return res.render('admin/create')
   },
@@ -35,17 +45,7 @@ module.exports = {
     }
   },
 
-  getRestaurant: async (req, res) => {
-    try {
-      const restaurantId = Number(req.params.restaurantId)
-      const restaurant = await Restaurant.findByPk(restaurantId, { raw: true })
-      return res.render('admin/restaurant', { restaurant })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  editPage: async (req, res) => {
+  updatePage: async (req, res) => {
     try {
       const restaurantId = Number(req.params.restaurantId)
       const restaurant = await Restaurant.findByPk(restaurantId, { raw: true })
@@ -55,7 +55,7 @@ module.exports = {
     }
   },
 
-  editRestaurant: async (req, res) => {
+  updateRestaurant: async (req, res) => {
     try {
       const { name, tel, address, openingHours, description } = req.body
 

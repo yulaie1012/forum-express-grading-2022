@@ -10,11 +10,11 @@ module.exports = (app, passport) => {
 
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
   app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants)
+  app.get('/admin/restaurants/:restaurantId', authenticatedAdmin, adminController.getRestaurant)
   app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createPage)
   app.post('/admin/restaurants', authenticatedAdmin, adminController.createRestaurant)
-  app.get('/admin/restaurants/:restaurantId', authenticatedAdmin, adminController.getRestaurant)
-  app.get('/admin/restaurants/:restaurantId/edit', authenticatedAdmin, adminController.editPage)
-  app.put('/admin/restaurants/:restaurantId', authenticatedAdmin, adminController.editRestaurant)
+  app.get('/admin/restaurants/:restaurantId/edit', authenticatedAdmin, adminController.updatePage)
+  app.put('/admin/restaurants/:restaurantId', authenticatedAdmin, adminController.updateRestaurant)
   app.delete('/admin/restaurants/:restaurantId', authenticatedAdmin, adminController.deleteRestaurant)
 
   app.get('/signup', userController.signUpPage)
