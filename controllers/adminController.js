@@ -72,5 +72,12 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  deleteRestaurant: async (req, res) => {
+    const restaurantId = Number(req.params.restaurantId)
+    await Restaurant.destroy({ where: { id: restaurantId } })
+    req.flash('successMessage', '刪除餐廳成功！')
+    return res.redirect('/admin/restaurants')
   }
 }
