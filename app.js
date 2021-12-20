@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+const passport = require('./config/passport')
 const flash = require('connect-flash')
 
 const app = express()
@@ -16,6 +17,9 @@ app.use(session({
   saveUninitialized: false
 }))
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use(flash())
 
 app.use((req, res, next) => {
@@ -28,6 +32,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app
