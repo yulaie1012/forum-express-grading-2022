@@ -53,5 +53,24 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  editRestaurant: async (req, res) => {
+    try {
+      const { name, tel, address, openingHours, description } = req.body
+
+      if (!name) {
+        req.flash('errorMessage', '名字必須填寫！')
+        return res.redirect('back')
+      }
+
+      const restaurantId = Number(req.params.restaurantId)
+      const restaurant = await Restaurant.findByPk(restaurantId)
+      await restaurant.update({ name, tel, address, openingHours, description })
+      req.flash('successMessage', '編輯餐廳成功！')
+      return res.redirect('/admin/restaurants')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
