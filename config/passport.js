@@ -16,11 +16,11 @@ passport.use(
         const user = await User.findOne({ where: { email } })
 
         if (!user) {
-          return done(null, false, req.flash('error_message', 'Incorrect username.'))
+          return done(null, false, req.flash('errorMessage', 'Incorrect username.'))
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(null, false, req.flash('error_message', 'Incorrect password.'))
+          return done(null, false, req.flash('errorMessage', 'Incorrect password.'))
         }
 
         return done(null, user)

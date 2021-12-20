@@ -10,15 +10,15 @@ module.exports = {
 
   signUp: async (req, res) => {
     const { name, email, password, passwordCheck } = req.body
-    const errors = []
+    const errorMessages = []
 
     if (!name || !email || !password || !passwordCheck) {
-      req.flash('error_message', '所有欄位都必須填寫！')
+      req.flash('errorMessage', '所有欄位都必須填寫！')
       return res.redirect('/signup')
     }
 
     if (password !== passwordCheck) {
-      errors.push({ message: '兩次密碼輸入不同！' })
+      errorMessages.push('兩次密碼輸入不同！')
     }
 
     const [checkName, checkEmail] = await Promise.all([
@@ -27,15 +27,15 @@ module.exports = {
     ])
 
     if (checkName) {
-      errors.push({ message: 'name 已經重複註冊！' })
+      errorMessages.push('name 已經重複註冊！')
     }
 
     if (checkEmail) {
-      errors.push({ message: 'email 已經重複註冊！' })
+      errorMessages.push('email 已經重複註冊！')
     }
 
-    if (errors.length) {
-      return res.render('signup', { errors, name, email, password, passwordCheck })
+    if (errorMessages.length) {
+      return res.render('signup', { errorMessages, name, email, password, passwordCheck })
     }
 
     await User.create({
@@ -43,7 +43,7 @@ module.exports = {
       email,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     })
-    req.flash('success_message', '成功註冊此 email！')
+    req.flash('successMessage', '成功註冊此 email！')
     return res.redirect('/signin')
   }
 }
