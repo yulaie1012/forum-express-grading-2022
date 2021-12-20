@@ -43,5 +43,15 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  editPage: async (req, res) => {
+    try {
+      const restaurantId = Number(req.params.restaurantId)
+      const restaurant = await Restaurant.findByPk(restaurantId, { raw: true })
+      return res.render('admin/create', { restaurant })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
