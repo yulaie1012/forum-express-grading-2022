@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const db = require('../models')
 const { Restaurant } = db
 
@@ -28,14 +30,25 @@ module.exports = {
   createRestaurant: async (req, res) => {
     try {
       const { name, tel, address, openingHours, description } = req.body
+      const { file } = req
 
       if (!name) {
         req.flash('errorMessage', '名字必須填寫！')
         return res.redirect('back')
       }
 
+      if (file) {
+        const image = fs.readFileSync(file.path)
+        fs.writeFileSync(`uploads/${file.originalname}`, image)
+      }
+
       await Restaurant.create({
-        name, tel, address, openingHours, description
+        name,
+        tel,
+        address,
+        openingHours,
+        description,
+        image: file ? `/uploads/${file.originalname}` : null
       })
 
       req.flash('successMessage', '新增餐廳成功！')
@@ -58,15 +71,30 @@ module.exports = {
   updateRestaurant: async (req, res) => {
     try {
       const { name, tel, address, openingHours, description } = req.body
+      const { file } = req
 
       if (!name) {
         req.flash('errorMessage', '名字必須填寫！')
         return res.redirect('back')
       }
 
+      if (file) {
+        const image = fs.readFileSync(file.path)
+        fs.writeFileSync(`uploads/${file.originalname}`, image)
+      }
+
       const restaurantId = Number(req.params.restaurantId)
       const restaurant = await Restaurant.findByPk(restaurantId)
-      await restaurant.update({ name, tel, address, openingHours, description })
+
+      await restaurant.update({
+        name,
+        tel,
+        address,
+        openingHours,
+        description,
+        image: file ? `/uploads/${file.originalname}` : restaurant.image
+      })
+
       req.flash('successMessage', '編輯餐廳成功！')
       return res.redirect('/admin/restaurants')
     } catch (err) {
