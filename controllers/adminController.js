@@ -33,5 +33,15 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  getRestaurant: async (req, res) => {
+    try {
+      const restaurantId = Number(req.params.restaurantId)
+      const restaurant = await Restaurant.findByPk(restaurantId, { raw: true })
+      return res.render('admin/restaurant', { restaurant })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
