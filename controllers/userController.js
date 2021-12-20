@@ -45,5 +45,20 @@ module.exports = {
     })
     req.flash('successMessage', '成功註冊此 email！')
     return res.redirect('/signin')
+  },
+
+  signInPage: (req, res) => {
+    return res.render('signin')
+  },
+
+  signIn: (req, res) => {
+    req.flash('successMessage', '登入成功！')
+    return res.redirect('/restaurants')
+  },
+
+  signOut: (req, res) => {
+    req.flash('successMessage', '登出成功！')
+    req.logOut()
+    return res.redirect('/signin')
   }
 }
