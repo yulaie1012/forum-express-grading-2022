@@ -5,5 +5,9 @@ module.exports = {
   getRestaurants: async (req, res) => {
     const restaurants = await Restaurant.findAll({ raw: true })
     return res.render('admin/restaurants', { restaurants })
+  },
+
+  createPage: async (req, res) => {
+    return res.render('admin/create')
   }
 }

@@ -10,11 +10,28 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="/">餐廳評論網</a>
+    <div class="navbar-collapse offcanvas-collapse">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <div>
+        {{#if currentUser.isAdmin}}
+        <a href="/admin" class="text-light align-middle mr-2">Admin 後台</a>
+        {{/if}}
+        {{#if currentUser}}
+        <span class="lead text-light align-middle mr-4">Hi, {{currentUser.name}}</span>
+        <a href="/users/{{currentUser.id}}" class="text-light align-middle mr-2">Profile</a>
+        <a href="/signout" class="btn btn-outline-light" role="button">Sign Out</a>
+        {{/if}}
+      </div>
+    </div>
+  </nav>
+
   <main role="main">
     <div class="album py-5 bg-light">
       <div class="container">
         {{> message}}
-        {{> navbar}}
 
         {{{body}}}
       </div>
