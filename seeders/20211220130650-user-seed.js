@@ -24,8 +24,8 @@ module.exports = {
           isAdmin: false,
           createdAt: new Date(),
           updatedAt: new Date()
-        }))
-      , {})
+        })
+        ), {})
   },
 
   down: async (queryInterface, Sequelize) => {
